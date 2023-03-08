@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { Platform } from 'react-native'
 import { HomeScreen } from "../screens/Home";
 import { SplashScreen } from '../screens/Splash';
 
@@ -10,15 +10,26 @@ export function AppRoutes() {
     <Navigator
       screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#023047' } }}
     >
-      <Screen
-        name="splash"
-        component={SplashScreen}
-      />
-      <Screen
-        name="home"
-        component={HomeScreen}
-        options={{ gestureEnabled: true }}
-      />
+      {Platform.OS === 'android' || Platform.OS === 'ios' ?
+        <>
+          <Screen
+            name="splash"
+            component={SplashScreen}
+          />
+          <Screen
+            name="home"
+            component={HomeScreen}
+            options={{ gestureEnabled: true }}
+          />
+        </>
+        :
+        <Screen
+          name="home"
+          component={HomeScreen}
+          options={{ gestureEnabled: true }}
+        />
+      }
+
     </Navigator>
   );
 }
